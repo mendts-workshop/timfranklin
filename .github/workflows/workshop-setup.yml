@@ -1,0 +1,39 @@
+name: TS workshop setup
+on: workflow_dispatch
+
+env:
+ GH_USERS_PER_ORG: 1
+ SAST_RUN_SCRIPT: false
+    
+jobs:
+  Workshop-setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Workshop-setup-github
+      env:
+        GH_TOKEN: ${{secrets.GH_TOKEN}}
+        GH_ORGS: "mendts-workshop, mendts-workshop1, mendts-workshop2"
+        GH_USERNAME: ts-whitesource
+        GH_BRANCH: easybuggy
+      run: |
+        chmod +x ./workshop-setup-github.sh
+        ./workshop-setup-github.sh ghusers.txt
+    - name: Workshop-setup-sca
+      env:
+        WS_APIKEYS: "${{secrets.WS_APIKEY}}, ${{secrets.WS_APIKEY1}}, ${{secrets.WS_APIKEY2}}"
+        WS_USERKEYS: "${{secrets.WS_USERKEY}}, ${{secrets.WS_USERKEY1}}, ${{secrets.WS_USERKEY2}}"
+        WS_WSS_URL: https://saas.mend.io/api/v1.3
+        WS_INVITERS: "tsworkshop@whitesourcesoftware.com, tsworkshop1@whitesourcesoftware.com, tsworkshop2@whitesourcesoftware.com"
+      run: |
+        chmod +x ./workshop-setup-sca.sh
+        ./workshop-setup-sca.sh emails.txt
+    - name: Workshop-setup-sast
+      if: ${{env.SAST_RUN_SCRIPT == 'true'}}
+      env:
+        SAST_API_TOKENS: "${{secrets.SAST_API_TOKEN}}, ${{secrets.SAST_API_TOKEN1}}, ${{secrets.SAST_API_TOKEN2}}"
+        SAST_URL: https://sast.mend.io/sast
+      run: |
+        chmod +x ./workshop-setup-sast.sh
+        ./workshop-setup-sast.sh emails.txt
+        
