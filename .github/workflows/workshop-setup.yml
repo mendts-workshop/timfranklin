@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 env:
  GH_USERS_PER_ORG: 1
- SAST_RUN_SCRIPT: false
+ SAST_RUN_SCRIPT: true
     
 jobs:
   Workshop-setup:
