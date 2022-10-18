@@ -2,7 +2,7 @@ name: TS workshop setup
 on: workflow_dispatch
 
 env:
- GH_USERS_PER_ORG: 1
+ GH_USERS_PER_ORG: 20
  SAST_RUN_SCRIPT: false
     
 jobs:
