@@ -8,6 +8,7 @@ In addition, projects used for workshops can easily be adjusted by the facilitat
 The current workshop setup includes 3 GitHub, SCA, and SAST organizations.
 - Workshops typically include GitHub and SCA organizations, while SAST organizations are optional depending on workshop requirements ([SAST focused workshops](#sast-focused-workshops)).
 - Additional organizations can be added on demand ([Extending workshop setup](#extending-workshop-setup)).
+  - GitHub organizations have 3 predefined secrets that enable the execution of GitHub actions and integration with Mend: APIKEY, USERKEY, and MENDURL.
 
 | GitHub.com organization  | SCA organization | SAST organization |
 | --- | --- | --- |
@@ -41,7 +42,7 @@ High level overview of the scripts:
   - workshop-setup- sast.sh - Create administrator accounts for the email address list (emails.txt) in SAST organizations.
   - workshop-cleanup-sast.sh - Delete all accounts in SAST organizations based on the email address list (emails.txt).
 
-# Supported Operating Systems
+# Supported operating systems
 -	**Linux (Bash)**: CentOS, Debian, Ubuntu, RedHat
 
 # Execution
