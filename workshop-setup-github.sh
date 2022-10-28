@@ -22,7 +22,7 @@ if [ -d "$workshopProjDir" ]; then
    cd $workshopProjDir && echo "$workshopProjDir exists"
 else
 # Only clone the specified branch into a separate  folder. This branch also serves as the name of the folder.
-   git clone --single-branch --branch $GH_BRANCH https://github.com/Dima2021/ts-workshop2.git $GH_BRANCH && cd ./$GH_BRANCH
+   git clone --single-branch --branch $GH_BRANCH https://github.com/mend-toolkit/ts-workshop.git $GH_BRANCH && cd ./$GH_BRANCH
    git config --local url."https://${GH_TOKEN}@github.com".insteadOf "https://github.com"
 fi
 
