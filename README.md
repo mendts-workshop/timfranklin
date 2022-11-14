@@ -50,9 +50,9 @@ There are 2 options to execute the scripts
 - #### GitHub actions (recommend):
   - Before the workshop
     - Create a new branch and fill the ghusers.txt and emails.txt (as detailed in [Prerequisites](#prerequisites)).
-    - Run the TS workshop setup [workshop-setup.yml](/../../actions/workflows/workshop-setup.yml) workflow **(from your branch)** to set up environments for workshop participants.
+    - Run the TS workshop setup [workshop-setup.yml](https://github.com/mend-toolkit/ts-workshop/actions/workflows/workshop-setup.yml) workflow **(from your branch)** to set up environments for workshop participants.
   - After the workshop
-    - Run the TS workshop cleanup [workshop-cleanup.yml](/../../actions/workflows/workshop-cleanup.yml) workflow **(from your branch)** to clean up environments.
+    - Run the TS workshop cleanup [workshop-cleanup.yml](https://github.com/mend-toolkit/ts-workshop/actions/workflows/workshop-cleanup.yml) workflow **(from your branch)** to clean up environments.
     - If any enhancements were performed, push them to the master branch and delete the workshop branch.
 - #### Local execution (fallback):
 The scripts can be (cloned and) executed locally if GitHub actions cannot be used (e.g. [GitHub actions usage](#github-actions-usage) limit exceeded).
