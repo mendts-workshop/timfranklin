@@ -1,22 +1,23 @@
-# Excluded IDE Directories
-.idea/
-.vs/
-.vscode/
-.ws/
+# Node modules
+node_modules
 
-# Excluded Local/User Directories
-_archive/
-_misc/
-local/
-log/
-target/
-repocreated.txt
+# Logs and databases
+*.log
+*.db
 
-# Excluded Files - Extensions
-*.iml
-*.png
-*.tar.gz
-*.url
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
 
-# Excluded Files - Naming Convention
-local-env.*
+# Idea stuff
+.idea/**
+
+# Zap output
+report*.html
+
+# e2e
+test/e2e/screenshots/

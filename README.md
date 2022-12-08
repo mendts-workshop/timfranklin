@@ -1,95 +1,160 @@
-![Logo](https://resources.mend.io/mend-sig/logo/mend-dark-logo-horizontal.png)
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)  
-# Technical Services Workshop Setup Tools
-This project aims to provide workshop facilitators with tools for setting up environments for workshop participants. TS-Workshop is designed for workshops with many participants so the workload can be distributed among several organizations.
-In addition, projects used for workshops can easily be adjusted by the facilitator. Detailed instructions and flows for workshop execution can be found [here](https://whitesource.atlassian.net/wiki/spaces/TES/pages/2500984892/Customer+Workshops).
+# NodeGoat
 
-# Workshop environments
-The current workshop setup includes 3 GitHub, SCA, and SAST organizations.
-- Workshops typically include GitHub and SCA organizations, while SAST organizations are optional depending on workshop requirements ([SAST focused workshops](#sast-focused-workshops)).
-- Additional organizations can be added on demand ([Extending workshop setup](#extending-workshop-setup)).
-  - GitHub organizations have 3 predefined secrets that enable the execution of GitHub actions and integration with Mend: APIKEY, USERKEY, and MENDURL.
+Being lightweight, fast, and scalable, Node.js is becoming a widely adopted platform for developing web applications. This project provides an environment to learn how OWASP Top 10 security risks apply to web applications developed using Node.js and how to effectively address them.
 
-| GitHub.com organization  | SCA organization | SAST organization |
-| --- | --- | --- |
-| [mendts-workshop](https://github.com/mendts-workshop) | MendTS-Workshop (https://saas.mend.io) | MendTS-Workshop (https://sast.mend.io/sast) |
-| [mendts-workshop1](https://github.com/mendts-workshop1) | MendTS-Workshop1 (https://saas.mend.io) | MendTS-Workshop1 (https://sast.mend.io/sast) |
-| [mendts-workshop2](https://github.com/mendts-workshop2) | MendTS-Workshop2 (https://saas.mend.io) | MendTS-Workshop2 (https://sast.mend.io/sast) |
+## Getting Started
 
-# Prerequisites
--	Fill ghusers.txt with GitHub user accounts that will be participating in the workshop. Do not use commas, just **line separated**.
--	Fill emails.txt with email accounts that will be participating in the workshop. Do not use commas, just **line separated**.
+OWASP Top 10 for Node.js web applications:
 
-# Tools for setting up a technical workshop
-The following parameters are important for understanding the script's functionality:
-- **GH_USERS_PER_ORG** - Number of users participating in a (single) GH/SCA/SAST organization.
-  - E.g., if GH_USERS_PER_ORG is set to 20 and there are 50 participants in the workshop, the first 20 will be created under MendTS-Workshop (GH/SCA/SAST organization). The next 20 participants will be created in MendTS-Workshop**1** (GH/SCA/SAST organization), and the last 10 in MendTS-Workshop**2** (GH/SCA/SAST organization).
-  - It is recommended that organizations have up to 20 users (due to performance considerations).
-- **GH_BRANCH** - The branch containing the project that will be used for the workshop (to be pushed to user repositories).
-  - E.g., GH_BRANCH=easybuggy, means that the content of easybuggy branch will be pushed to user repositories.
-  - [Modifying workshop content](#modifying-workshop-content).
+### Know it!
 
-High level overview of the scripts:
-- #### GitHub scripts:
-  - workshop-setup-github.sh
-    - Create repositories in GitHub organizations based on GitHub users list (ghusers.txt). The repository is created with the same name as the GitHub user and give that user admin privileges.
-    - Push the workshop project to the user repositories (from the specified branch).
-  - workshop-cleanup-github.sh - Delete all repositories in GitHub organizations based on the GitHub users list (ghusers.txt).
-- #### SCA scripts:
-  - workshop-setup-sca.sh - Create administrator accounts for the email address list (emails.txt) in SCA organizations.
-  - workshop-cleanup-sca.sh - Delete all accounts in SCA organizations based on the email address list (emails.txt).
-- #### SAST scripts:
-  - workshop-setup- sast.sh - Create administrator accounts for the email address list (emails.txt) in SAST organizations.
-  - workshop-cleanup-sast.sh - Delete all accounts in SAST organizations based on the email address list (emails.txt).
+[Tutorial Guide](http://nodegoat.herokuapp.com/tutorial) explaining how each of the OWASP Top 10 vulnerabilities can manifest in Node.js web apps and how to prevent it.
 
-# Supported operating systems
--	**Linux (Bash)**: CentOS, Debian, Ubuntu, RedHat
+### Do it!
 
-# Execution
-There are 2 options to execute the scripts
-- #### GitHub actions (recommend):
-  - Before the workshop
-    - Create a new branch and fill the ghusers.txt and emails.txt (as detailed in [Prerequisites](#prerequisites)).
-    - Run the TS workshop setup [workshop-setup.yml](https://github.com/mend-toolkit/ts-workshop/actions/workflows/workshop-setup.yml) workflow **(from your branch)** to set up environments for workshop participants.
-  - After the workshop
-    - Run the TS workshop cleanup [workshop-cleanup.yml](https://github.com/mend-toolkit/ts-workshop/actions/workflows/workshop-cleanup.yml) workflow **(from your branch)** to clean up environments.
-    - If any enhancements were performed, push them to the master branch and delete the workshop branch.
-- #### Local execution (fallback):
-The scripts can be (cloned and) executed locally if GitHub actions cannot be used (e.g. [GitHub actions usage](#github-actions-usage) limit exceeded).
-  - ```git clone https://github.com/mend-toolkit/ts-workshop.git && cd ts-workshop```
-  - All script parameters must be set, including the parameters that have been predefined as [Repository secrets](#repository-secrets).
-  - Fill the ghusers.txt and emails.txt (as detailed in [Prerequisites](#prerequisites)).
-  - Run workshop-setup.sh script to set up the environments for workshop participants.
-    - ```chmod +x ./workshop-setup.sh && ./workshop-setup.sh```
-  - Run workshop-cleanup.sh script to clean up the environments after the workshop.
-    - ```chmod +x ./workshop-cleanup.sh && ./cleanup-setup.sh```
+[A Vulnerable Node.js App for Ninjas](http://nodegoat.herokuapp.com/) to exploit, toast, and fix. You may like to [set up your own copy](#how-to-set-up-your-copy-of-nodegoat) of the app to fix and test vulnerabilities. Hint: Look for comments in the source code.
 
-# Repository secrets
-The following parameters are predefined as repository secrets and need to be defined in case of the [Local execution](#local-execution-fallback).
-- GitHub parameters [GitHub scripts](#github-scripts):
-  - GH_TOKEN - GitHub token can be obtained from your manager.
-- SCA parameters [SCA scripts](#sca-scripts):
-  - WS_APIKEYS - API tokens can be obtained from [SCA organizations](#workshop-environments).
-  - WS_USERKEYS - Keys can be obtained from service users in [SCA organizations](#workshop-environments).
-- SAST parameters [SAST scripts](#sast-scripts):
-  - SAST_API_TOKENS - API tokens can be obtained from [SAST organizations](#workshop-environments).
+##### Default user accounts
 
-# Appendix
-#### SAST focused workshops
-SAST scripts are disabled by default and need to be enabled in order to set up SAST organizations for workshop participants.
-- SAST_RUN_SCRIPT - Change to true **(lower case)** to enable SAST scripts.
-#### Extending workshop setup
-Adding new organizations for extended [Workshop environments](#workshop-environments) will require updating the following parameters:
-- GitHub parameters [GitHub scripts](#github-scripts):
-  - GH_ORGS
-- SCA parameters [SCA scripts](#sca-scripts):
-  - WS_APIKEYS
-  - WS_USERKEYS
-- SAST parameters [SAST scripts](#sast-scripts):
-  - SAST_API_TOKENS
-#### Modifying workshop content
-- **Adding new projects for the workshop** - Create a new branch to this repository with the desired content (e.g., the [easybuggy branch](/../../tree/easybuggy) contains the [easybuggy](https://github.com/k-tamura/easybuggy) application).
-- **Updating existing projects** - Navigate to the appropriate branch and update the application content as necessary.
+The database comes pre-populated with these user accounts created as part of the seed data -
+* Admin Account - u:admin p:Admin_123
+* User Accounts (u:user1 p:User1_123), (u:user2 p:User2_123)
+* New users can also be added using the sign-up page.
 
-# GitHub actions usage
--	https://github.com/settings/billing (Usage this month)
+## How to Set Up Your Copy of NodeGoat
+
+### OPTION 1 - Run NodeGoat on your machine
+
+1) Install [Node.js](http://nodejs.org/) - NodeGoat requires Node v8 or above
+
+2) Clone the github repository:
+   ```
+   git clone https://github.com/OWASP/NodeGoat.git
+   ```
+
+3) Go to the directory:
+   ```
+   cd NodeGoat
+   ```
+
+4) Install node packages:
+   ```
+   npm install
+   ```
+
+5) Set up MongoDB. You can either install MongoDB locally or create a remote instance:
+
+   * Using local MongoDB:
+     1) Install [MongoDB Community Server](https://docs.mongodb.com/manual/administration/install-community/)
+     2) Start [mongod](http://docs.mongodb.org/manual/reference/program/mongod/#bin.mongod)
+
+   * Using remote MongoDB instance:
+     1) [Deploy a MongoDB Atlas free tier cluster](https://docs.atlas.mongodb.com/tutorial/deploy-free-tier-cluster/) (M0 Sandbox)
+     2) [Enable network access](https://docs.atlas.mongodb.com/security/add-ip-address-to-list/) to the cluster from your current IP address
+     3) [Add a database user](https://docs.atlas.mongodb.com/tutorial/create-mongodb-user-for-cluster/) to the cluster
+     4) Set the `MONGODB_URI` environment variable to the connection string of your cluster, which can be viewed in the cluster's
+        [connect dialog](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/#connect-to-your-atlas-cluster). Select "Connect your application",
+        set the driver to "Node.js" and the version to "2.2.12 or later". This will give a connection string in the form:
+        ```
+        mongodb://<username>:<password>@<cluster>/<dbname>?ssl=true&replicaSet=<rsname>&authSource=admin&retryWrites=true&w=majority
+        ```
+        The `<username>` and `<password>` fields need filling in with the details of the database user added earlier. The `<dbname>` field sets the name of the
+        database nodegoat will use in the cluster (eg "nodegoat"). The other fields will already be filled in with the correct details for your cluster.
+
+6) Populate MongoDB with the seed data required for the app:
+   ```
+   npm run db:seed
+   ```
+   By default this will use the "development" configuration, but the desired config can be passed as an argument if required.
+
+7) Start the server. You can run the server using node or nodemon:
+   * Start the server with node. This starts the NodeGoat application at [http://localhost:4000/](http://localhost:4000/):
+     ```
+     npm start
+     ```
+   * Start the server with nodemon, which will automatically restart the application when you make any changes. This starts the NodeGoat application at [http://localhost:5000/](http://localhost:5000/):
+     ```
+     npm run dev
+     ```
+
+#### Customizing the Default Application Configuration
+
+By default the application will be hosted on port 4000 and will connect to a MongoDB instance at localhost:27017. To change this set the environment variables `PORT` and `MONGODB_URI`.
+
+Other settings can be changed by updating the [config file](https://github.com/OWASP/NodeGoat/blob/master/config/env/all.js).
+
+### OPTION 2 - Run NodeGoat on Docker
+
+The repo includes the Dockerfile and docker-compose.yml necessary to set up the app and db instance, then connect them together.
+
+1) Install [docker](https://docs.docker.com/installation/) and [docker compose](https://docs.docker.com/compose/install/) 
+
+2) Clone the github repository:
+   ```
+   git clone https://github.com/OWASP/NodeGoat.git
+   ```
+
+3) Go to the directory:
+   ```
+   cd NodeGoat
+   ```
+
+4) Build the images:
+   ```
+   docker-compose build
+   ```
+
+5) Run the app, this starts the NodeGoat application at http://localhost:4000/:
+   ```
+   docker-compose up
+   ```
+
+### OPTION 3 - Deploy to Heroku
+
+This option uses a free ($0/month) Heroku node server.
+
+Though not essential, it is recommended that you fork this repository and deploy the forked repo.
+This will allow you to fix vulnerabilities in your own forked version, then deploy and test it on Heroku.
+
+1) Set up a publicly accessible MongoDB instance:
+   1) [Deploy a MongoDB Atlas free tier cluster](https://docs.atlas.mongodb.com/tutorial/deploy-free-tier-cluster/) (M0 Sandbox)
+   2) [Enable network access](https://docs.atlas.mongodb.com/security/ip-access-list/#add-ip-access-list-entries) to the cluster from anywhere (CIDR range 0.0.0.0/0)
+   3) [Add a database user](https://docs.atlas.mongodb.com/tutorial/create-mongodb-user-for-cluster/) to the cluster
+
+2) Deploy NodeGoat to Heroku by clicking the button below:
+
+   [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+   In the Create New App dialog, set the `MONGODB_URI` config var to the connection string of your MongoDB Atlas cluster.
+   This can be viewed in the cluster's [connect dialog](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/#connect-to-your-atlas-cluster).
+   Select "Connect your application", set the driver to "Node.js" and the version to "2.2.12 or later".
+   This will give a connection string in the form:
+   ```
+   mongodb://<username>:<password>@<cluster>/<dbname>?ssl=true&replicaSet=<rsname>&authSource=admin&retryWrites=true&w=majority
+   ```
+   The `<username>` and `<password>` fields need filling in with the details of the database user added earlier. The `<dbname>` field sets the name of the
+   database nodegoat will use in the cluster (eg "nodegoat"). The other fields will already be filled in with the correct details for your cluster.
+
+## Report bugs, Feedback, Comments
+
+*  Open a new [issue](https://github.com/OWASP/NodeGoat/issues) or contact team by joining chat at [Slack](https://owasp.slack.com/messages/project-nodegoat/) or [![Join the chat at https://gitter.im/OWASP/NodeGoat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/OWASP/NodeGoat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Contributing
+
+Please Follow [the contributing guide](CONTRIBUTING.md)
+
+## Code Of Conduct (CoC)
+
+This project is bound by a [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Contributors
+
+Here are the amazing [contributors](https://github.com/OWASP/NodeGoat/graphs/contributors) to the NodeGoat project.
+
+## Supports
+
+- Thanks to JetBrains for providing licenses to fantastic [WebStorm IDE](https://www.jetbrains.com/webstorm/) to build this project.
+
+## License
+
+Code licensed under the [Apache License v2.0.](http://www.apache.org/licenses/LICENSE-2.0)
