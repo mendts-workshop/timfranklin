@@ -16,8 +16,12 @@
     "issueType": "DEPENDENCY"
   },
   "remediateSettings": {
+    "enableRenovate": "true",
+    "extends": [
+      "config:base"
+    ],
     "workflowRules": {
-      "enabled": true,
+      "enabled": false,
       "minVulnerabilitySeverity": "HIGH"
     }
   }
